@@ -289,6 +289,12 @@ class Manager extends PublicEmitter implements IUserManager {
 	 */
 	public function createUser($uid, $password) {
 		$l = \OC::$server->getL10N('lib');
+
+		// Username must at least 3 characters long
+		if(strlen($uid) <= 3) {
+			throw new \Exception($l->t('The username must be at least 3 characters long'));
+		}
+
 		// Check the name for bad characters
 		// Allowed are: "a-z", "A-Z", "0-9" and "_.@-'"
 		if (preg_match('/[^a-zA-Z0-9 _\.@\-\']/', $uid)) {
